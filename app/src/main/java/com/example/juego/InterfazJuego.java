@@ -44,23 +44,26 @@ public class InterfazJuego extends AppCompatActivity {
     }
 
     public void iniciarJuego(){
+        int j=0;
+        while(j=<3){
+            new CountDownTimer(1000, 20) {
+                int aux = generarAleatorios();
 
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    destacarImagenes(aux);
+                }
 
-        new CountDownTimer(2000,20){
-            int aux=generarAleatorios();
-            @Override
-            public void onTick(long millisUntilFinished) {
-                destacarImagenes(aux);
-            }
-
-            @Override
-            public void onFinish() {
-                lAmarillo.setColorFilter(Color.rgb(255,255,0));
-                lAzul.setColorFilter(Color.rgb(0,0,255));
-                lVerde.setColorFilter(Color.rgb(0,255,0));
-                lRojo.setColorFilter(Color.rgb(255,0,0));
-            }
-        }.start();
+                @Override
+                public void onFinish() {
+                    lAmarillo.setColorFilter(Color.rgb(255, 255, 0));
+                    lAzul.setColorFilter(Color.rgb(0, 0, 255));
+                    lVerde.setColorFilter(Color.rgb(0, 255, 0));
+                    lRojo.setColorFilter(Color.rgb(255, 0, 0));
+                }
+            }.start();
+            j++;
+        }
 
     }
 
