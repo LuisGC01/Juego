@@ -63,7 +63,7 @@ public class InterfazJuego extends AppCompatActivity {
         }
     }
 
-    public int efecto(int j){
+    public void efecto(int j){
 
         new CountDownTimer(2000,2000/j){
 
