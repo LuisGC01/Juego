@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -23,7 +24,7 @@ public class InterfazJuego extends AppCompatActivity {
     ImageView lVerde;
     TextView cNombre;
     TextView lPuntaje;
-
+    ArrayList<Integer> g;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +42,13 @@ public class InterfazJuego extends AppCompatActivity {
         lAzul.setBackgroundColor(Color.rgb(0, 0, 255));
         lVerde.setBackgroundColor(Color.rgb(0, 255, 0));
         lRojo.setBackgroundColor(Color.rgb(255, 0, 0));
+        g = new ArrayList<Integer>();
 
         btnIniciar.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+                btnIniciar.setActivated(false);
                 iniciarJuego();
             }
         });
@@ -53,15 +57,23 @@ public class InterfazJuego extends AppCompatActivity {
 
 
     public void iniciarJuego() {
-        new CountDownTimer(3000,1000){
-            int l=0,k=0;
+
+        for(int j = 1; j<=g.size()+1;j++){
+            efecto(j);
+        }
+    }
+
+    public int efecto(int j){
+
+        new CountDownTimer(2000,2000/j){
+
             @Override
             public void onTick(long millisUntilFinished) {
                 lAmarillo.setBackgroundColor(Color.rgb(255, 255, 0));
                 lAzul.setBackgroundColor(Color.rgb(0, 0, 255));
                 lVerde.setBackgroundColor(Color.rgb(0, 255, 0));
                 lRojo.setBackgroundColor(Color.rgb(255, 0, 0));
-                k=iluminarboton();
+                g.add(iluminarboton());
                 lAmarillo.setBackgroundColor(Color.rgb(255, 255, 0));
                 lAzul.setBackgroundColor(Color.rgb(0, 0, 255));
                 lVerde.setBackgroundColor(Color.rgb(0, 255, 0));
@@ -70,7 +82,10 @@ public class InterfazJuego extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                Log.e("dsd","sdf");
+                lAmarillo.setBackgroundColor(Color.rgb(255, 255, 0));
+                lAzul.setBackgroundColor(Color.rgb(0, 0, 255));
+                lVerde.setBackgroundColor(Color.rgb(0, 255, 0));
+                lRojo.setBackgroundColor(Color.rgb(255, 0, 0));
             }
         }.start();
     }
