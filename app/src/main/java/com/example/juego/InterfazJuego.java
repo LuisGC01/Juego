@@ -69,34 +69,7 @@ public class InterfazJuego extends AppCompatActivity {
 
         }
     }
-
-    public void efecto(){
-
-        new CountDownTimer(2000,2000){
-
-            @Override
-            public void onTick(long millisUntilFinished) {
-                lAmarillo.setBackgroundColor(Color.rgb(255, 255, 0));
-                lAzul.setBackgroundColor(Color.rgb(0, 0, 255));
-                lVerde.setBackgroundColor(Color.rgb(0, 255, 0));
-                lRojo.setBackgroundColor(Color.rgb(255, 0, 0));
-                iluminarBoton();
-                lAmarillo.setBackgroundColor(Color.rgb(255, 255, 0));
-                lAzul.setBackgroundColor(Color.rgb(0, 0, 255));
-                lVerde.setBackgroundColor(Color.rgb(0, 255, 0));
-                lRojo.setBackgroundColor(Color.rgb(255, 0, 0));
-            }
-
-            @Override
-            public void onFinish() {
-                lAmarillo.setBackgroundColor(Color.rgb(255, 255, 0));
-                lAzul.setBackgroundColor(Color.rgb(0, 0, 255));
-                lVerde.setBackgroundColor(Color.rgb(0, 255, 0));
-                lRojo.setBackgroundColor(Color.rgb(255, 0, 0));
-            }
-        }.start();
-    }
-
+    
     public void iluminarBoton(final int k){
         new CountDownTimer(2000, 2000/k) {
             int c=0;
