@@ -62,7 +62,7 @@ public class InterfazJuego extends AppCompatActivity {
         for(int j = 0; j<=g.size();j++){
             if(score==0 && j==0){
                 generarAleatorios();
-                iluminarBoton(g.get(j).intValue());
+                iluminarBoton(1);
             }else if(score>0&& score==j){
                 iluminarBoton(j);
             }
