@@ -69,7 +69,7 @@ public class InterfazJuego extends AppCompatActivity {
 
         }
     }
-    
+
     public void iluminarBoton(final int k){
         new CountDownTimer(2000, 2000/k) {
             int c=0;
