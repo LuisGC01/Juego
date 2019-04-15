@@ -25,7 +25,8 @@ public class InterfazJuego extends AppCompatActivity {
     TextView cNombre;
     TextView lPuntaje;
     ArrayList<Integer> g;
-    int score=0;
+    int score = 0;
+    int k;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,75 +40,103 @@ public class InterfazJuego extends AppCompatActivity {
         lVerde = (ImageView) findViewById(R.id.iVerde);
         cNombre = (TextView) findViewById(R.id.cNombre);
         lPuntaje = (TextView) findViewById(R.id.lPuntaje);
-        lAmarillo.setBackgroundColor(Color.rgb(255, 255, 0));
-        lAzul.setBackgroundColor(Color.rgb(0, 0, 255));
-        lVerde.setBackgroundColor(Color.rgb(0, 255, 0));
-        lRojo.setBackgroundColor(Color.rgb(255, 0, 0));
+        colorearBotones();
+        score=0;
         g = new ArrayList<Integer>();
-
+        k = g.size();
         btnIniciar.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 btnIniciar.setActivated(false);
-                iniciarJuego();
+                int l=0;
+                if(g.size()<1){
+                    l=generarAleatorios();
+                }else{
+                    do{
+                        l=generarAleatorios();
+                    }while (g.get(g.size()-1)==l);
+                }
+                Log.e("n",""+l);
+                g.add(l);
+                lPuntaje.setText(""+score);
+                new CountDownTimer(1000, 1000 / g.size()) {
+                    int c = 0;
+
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        colorearBotones();
+                        try {
+                            if (c < g.size()) {
+                                lAmarillo.setBackgroundColor(Color.rgb(255, 255, 0));
+                                lAzul.setBackgroundColor(Color.rgb(0, 0, 255));
+                                lVerde.setBackgroundColor(Color.rgb(0, 255, 0));
+                                lRojo.setBackgroundColor(Color.rgb(255, 0, 0));
+                                iluminarBoton(g.get(c));
+                                c++;
+                            }
+                        } catch (Exception e) {
+                            Log.e("El error", e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        colorearBotones();
+                    }
+                }.start();
+                score++;
             }
         });
 
+
     }
 
 
-    public void iniciarJuego() {
+    public void colorearBotones() {
+        lAmarillo.setBackgroundColor(Color.rgb(255, 255, 0));
+        lAzul.setBackgroundColor(Color.rgb(0, 0, 255));
+        lVerde.setBackgroundColor(Color.rgb(0, 255, 0));
+        lRojo.setBackgroundColor(Color.rgb(255, 0, 0));
+    }
 
-        for(int j = 0; j<=g.size();j++){
-            if(score==0 && j==0){
-                generarAleatorios();
-                iluminarBoton(1);
-            }else if(score>0&& score==j){
-                iluminarBoton(j);
-            }
+    public void iluminarBoton(int k) {
+        colorearBotones();
+        if (k == 0) {
+            lVerde.setBackgroundColor(Color.rgb(0, 125, 0));
+            lAmarillo.setBackgroundColor(Color.rgb(255, 255, 0));
+            lAzul.setBackgroundColor(Color.rgb(0, 0, 255));
+            lRojo.setBackgroundColor(Color.rgb(255, 0, 0));
+        } else if (k == 1) {
+            lRojo.setBackgroundColor(Color.rgb(125, 0, 0));
+            lAmarillo.setBackgroundColor(Color.rgb(255, 255, 0));
+            lAzul.setBackgroundColor(Color.rgb(0, 0, 255));
+            lVerde.setBackgroundColor(Color.rgb(0, 255, 0));
+        } else if (k == 2) {
+            lAzul.setBackgroundColor(Color.rgb(0, 0, 125));
+            lAmarillo.setBackgroundColor(Color.rgb(255, 255, 0));
+            lVerde.setBackgroundColor(Color.rgb(0, 255, 0));
+            lRojo.setBackgroundColor(Color.rgb(255, 0, 0));
+        } else if (k == 3) {
+            lAmarillo.setBackgroundColor(Color.rgb(130, 125, 0));
+            lAzul.setBackgroundColor(Color.rgb(0, 0, 255));
+            lVerde.setBackgroundColor(Color.rgb(0, 255, 0));
+            lRojo.setBackgroundColor(Color.rgb(255, 0, 0));
 
         }
-    }
 
-    public void iluminarBoton(final int k){
-        new CountDownTimer(2000, 2000/k) {
-            int c=0;
-            @Override
-            public void onTick(long millisUntilFinished) {
-                int j =g.get(c).intValue();
-                if (j == 0) {
-                    lVerde.setBackgroundColor(Color.rgb(0, 125, 0));
-                } else if (j == 1) {
-                    lRojo.setBackgroundColor(Color.rgb(125, 0, 0));
-                } else if (j == 2) {
-                    lAzul.setBackgroundColor(Color.rgb(0, 0, 125));
-                } else if (j == 3) {
-                    lAmarillo.setBackgroundColor(Color.rgb(130, 125, 0));
-                }
-                c++;
-            }
-
-            @Override
-            public void onFinish() {
-                lAmarillo.setBackgroundColor(Color.rgb(255, 255, 0));
-                lAzul.setBackgroundColor(Color.rgb(0, 0, 255));
-                lVerde.setBackgroundColor(Color.rgb(0, 255, 0));
-                lRojo.setBackgroundColor(Color.rgb(255, 0, 0));
-            }
-        }.start();
     }
 
 
-
-    public void generarAleatorios() {
+    public int generarAleatorios() {
         double j = 0;
         int k = 0;
         do {
             j = Math.random() * 10;
             k = (int) j;
+
         } while (k >= 4);
-        g.add(k);
+        return k;
     }
 
 
