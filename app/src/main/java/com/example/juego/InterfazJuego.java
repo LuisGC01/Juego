@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +34,7 @@ public class InterfazJuego extends AppCompatActivity {
     MediaPlayer sRo;
     MediaPlayer sAz;
     MediaPlayer sVe;
+    ConstraintLayout layFondo;
 
 
     @Override
@@ -40,7 +42,8 @@ public class InterfazJuego extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interfaz_juego);
 
-        Bundle d= getIntent().getExtras();
+        layFondo=(ConstraintLayout)findViewById(R.id.layFondo);
+        Bundle d = getIntent().getExtras();
         btnIniciar = (Button) findViewById(R.id.btnIniciar);
         lAmarillo = (ImageView) findViewById(R.id.lAmarillo);
         lRojo = (ImageView) findViewById(R.id.lRojo);
@@ -49,36 +52,36 @@ public class InterfazJuego extends AppCompatActivity {
         cNombre = (TextView) findViewById(R.id.lNombre);
         lPuntaje = (TextView) findViewById(R.id.lPuntaje);
         colorearBotones();
-        score=0;
+        score = 0;
         g = new ArrayList<Integer>();
-        k = g.size();
-        sAm=MediaPlayer.create(this, R.raw.c4);
-        sRo=MediaPlayer.create(this, R.raw.c2);
-        sAz=MediaPlayer.create(this, R.raw.c3);
-        sVe=MediaPlayer.create(this, R.raw.c1);
-        String s =getIntent().getStringExtra("n");
+        sAm = MediaPlayer.create(this, R.raw.c4);
+        sRo = MediaPlayer.create(this, R.raw.c2);
+        sAz = MediaPlayer.create(this, R.raw.c3);
+        sVe = MediaPlayer.create(this, R.raw.c1);
+        String s = getIntent().getStringExtra("n");
         cNombre.setText(s);
         btnIniciar.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
+                layFondo.setBackgroundColor(Color.WHITE);
                 btnIniciar.setEnabled(false);
                 lVerde.setEnabled(true);
                 lRojo.setEnabled(true);
                 lAzul.setEnabled(true);
                 lAmarillo.setEnabled(true);
                 h = new ArrayList<Integer>();
-                /*int l=0;
-                if(g.size()<1){
-                    l=generarAleatorios();
-                }else{
-                    do{
-                        l=generarAleatorios();
-                    }while (g.get(g.size()-1)==l);
+                int l = 0;
+                if (g.size() < 1) {
+                    l = generarAleatorios();
+                } else {
+                    do {
+                        l = generarAleatorios();
+                    } while (g.get(g.size() - 1) == l);
                 }
-                Log.e("n",""+l);
                 g.add(l);
-                lPuntaje.setText(""+score);
+                lPuntaje.setText("" + score);
+
                 new CountDownTimer(2000, 2000 / g.size()) {
                     int c = 0;
 
@@ -102,61 +105,65 @@ public class InterfazJuego extends AppCompatActivity {
                     @Override
                     public void onFinish() {
                         colorearBotones();
-                        btnIniciar.setEnabled(true);
-                    }
-                }.start();*/
-                new CountDownTimer(2000, 1) {
+                        new CountDownTimer(2000, 1) {
 
-                    @Override
-                    public void onTick(long millisUntilFinished) {
-                        lVerde.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onClick(View v) {
-                                h.add(0);
-                                iluminarBoton(0);
+                            public void onTick(long millisUntilFinished) {
+                                lVerde.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        h.add(0);
+                                        iluminarBoton(0);
+                                    }
+                                });
+                                lRojo.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        h.add(1);
+                                        iluminarBoton(1);
+                                    }
+                                });
+                                lAzul.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        h.add(2);
+                                        iluminarBoton(2);
+                                    }
+                                });
+                                lAmarillo.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        h.add(3);
+                                        iluminarBoton(3);
+                                    }
+                                });
+
                             }
-                        });
-                        lRojo.setOnClickListener(new View.OnClickListener() {
+
                             @Override
-                            public void onClick(View v) {
-                                h.add(1);
-                                iluminarBoton(1);
+                            public void onFinish() {
+                                btnIniciar.setEnabled(true);
+                                colorearBotones();
+
+                                lVerde.setEnabled(false);
+                                lRojo.setEnabled(false);
+                                lAzul.setEnabled(false);
+                                lAmarillo.setEnabled(false);
+                                if (h.size() == g.size() && h.equals(g)) {
+                                    score++;
+                                    lPuntaje.setText("" + score);
+                                }else{
+                                    score=0;
+                                    lPuntaje.setText("Has Fallado");
+                                    h = new ArrayList<Integer>();
+                                    g = new ArrayList<Integer>();
+                                    layFondo.setBackgroundColor(Color.rgb(239,127,26));
+                                }
+                                btnIniciar.setEnabled(true);
                             }
-                        });
-                        lAzul.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                h.add(2);
-                                iluminarBoton(2);
-                            }
-                        });
-                        lAmarillo.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                h.add(3);
-                                iluminarBoton(3);
-                            }
-                        });
-
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        btnIniciar.setEnabled(true);
-                        colorearBotones();
-                        lVerde.setEnabled(false);
-                        lRojo.setEnabled(false);
-                        lAzul.setEnabled(false);
-                        lAmarillo.setEnabled(false);
-
-
+                        }.start();
                     }
                 }.start();
-
-
-
-
-                score++;
             }
         });
 

@@ -21,8 +21,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getBaseContext(),InterfazJuego.class);
-                i.putExtra("n",cNombre.getText().toString());
-                startActivity(i);
+                if(!cNombre.getText().toString().isEmpty()){
+                    i.putExtra("n",cNombre.getText().toString());
+                    startActivity(i);
+                }
+
             }
         });
     }
