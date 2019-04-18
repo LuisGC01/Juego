@@ -15,13 +15,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btnIniciar=(Button)findViewById(R.id.btnIniciar);
-        cNombre=(EditText)findViewById(R.id.cNombre);
+        cNombre=(EditText)findViewById(R.id.cNombre1);
 
         btnIniciar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getBaseContext(),InterfazJuego.class);
-                i.putExtra("nombre",cNombre.getText().toString());
+                i.putExtra("n",cNombre.getText().toString());
                 startActivity(i);
             }
         });
